@@ -1,0 +1,2838 @@
+/* =====================================================
+  RESET
+===================================================== */
+
+
+* {
+   box-sizing: border-box;
+}
+
+
+html,
+body {
+   width: 100%;
+   height: 100%;
+}
+
+
+
+
+/* =====================================================
+  BODY
+===================================================== */
+
+
+body {
+   margin: 0;
+   overflow: hidden;
+   color: white;
+   background: #050505;
+
+
+   font-family:
+       -apple-system,
+       BlinkMacSystemFont,
+       "SF Pro Display",
+       "Helvetica Neue",
+       sans-serif;
+
+
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+
+
+
+/* =====================================================
+  GLOBAL BACKGROUND
+===================================================== */
+
+
+.background {
+   position: fixed;
+   inset: -30%;
+   overflow: hidden;
+   background: #050505;
+   z-index: 0;
+   pointer-events: none;
+}
+
+
+.background::after {
+   content: "";
+   position: absolute;
+   inset: 0;
+
+
+   background:
+       rgba(0, 0, 0, 0.25);
+
+
+   pointer-events: none;
+}
+
+
+
+
+/* =====================================================
+  BLOBS
+===================================================== */
+
+
+.blob {
+   position: absolute;
+
+
+   width: 60vw;
+   height: 60vw;
+
+
+   max-width: 1550px;
+   max-height: 1550px;
+
+
+   border-radius: 50%;
+
+
+   filter: blur(90px);
+
+
+   opacity: 0.8;
+
+
+   transition:
+       background 3.5s cubic-bezier(0.22, 1, 0.36, 1);
+
+
+   will-change: transform, background;
+}
+
+
+.blob-1 {
+   left: -20%;
+   top: -25%;
+   background: #6d5dfc;
+
+
+   animation:
+       breatheOne
+       18s
+       ease-in-out
+       infinite
+       alternate;
+}
+
+
+.blob-2 {
+   right: -20%;
+   top: -15%;
+   background: #287bff;
+
+
+   animation:
+       breatheTwo
+       23s
+       ease-in-out
+       infinite
+       alternate;
+}
+
+
+.blob-3 {
+   left: -15%;
+   bottom: -30%;
+   background: #d946ef;
+
+
+   animation:
+       breatheThree
+       27s
+       ease-in-out
+       infinite
+       alternate;
+}
+
+
+.blob-4 {
+   right: -15%;
+   bottom: -30%;
+   background: #ff7a18;
+
+
+   animation:
+       breatheFour
+       21s
+       ease-in-out
+       infinite
+       alternate;
+}
+
+
+
+
+/* =====================================================
+  BLOB MOVEMENT
+===================================================== */
+
+
+@keyframes breatheOne {
+   0% {
+       transform: translate(-4vw, -3vh) scale(0.92);
+   }
+
+
+   50% {
+       transform: translate(7vw, 5vh) scale(1.08);
+   }
+
+
+   100% {
+       transform: translate(2vw, 13vh) scale(1.16);
+   }
+}
+
+
+@keyframes breatheTwo {
+   0% {
+       transform: translate(5vw, -3vh) scale(1);
+   }
+
+
+   50% {
+       transform: translate(-8vw, 8vh) scale(1.12);
+   }
+
+
+   100% {
+       transform: translate(-13vw, -2vh) scale(1.05);
+   }
+}
+
+
+@keyframes breatheThree {
+   0% {
+       transform: translate(-4vw, 5vh) scale(1.04);
+   }
+
+
+   50% {
+       transform: translate(8vw, -7vh) scale(0.95);
+   }
+
+
+   100% {
+       transform: translate(15vw, -2vh) scale(1.13);
+   }
+}
+
+
+@keyframes breatheFour {
+   0% {
+       transform: translate(5vw, 5vh) scale(0.95);
+   }
+
+
+   50% {
+       transform: translate(-8vw, -5vh) scale(1.1);
+   }
+
+
+   100% {
+       transform: translate(-4vw, -13vh) scale(1.17);
+   }
+}
+
+
+
+
+/* =====================================================
+  BEAT PULSE
+===================================================== */
+
+
+@keyframes blobBeat {
+   0% {
+       filter: blur(90px);
+   }
+
+
+   50% {
+       filter: blur(82px);
+   }
+
+
+   100% {
+       filter: blur(90px);
+   }
+}
+
+
+.blob.pulse {
+   animation:
+       blobBeat
+       0.18s
+       ease-out;
+}
+
+
+
+
+/* =====================================================
+  APP PAGES
+===================================================== */
+
+
+.app-pages {
+   position: fixed;
+   inset: 0;
+
+
+   display: flex;
+
+
+   width: 300vw;
+   height: 100vh;
+
+
+   transform: translateX(-100vw);
+
+
+   transition:
+       transform
+       0.75s
+       cubic-bezier(0.22, 1, 0.36, 1);
+
+
+   will-change: transform;
+
+
+   z-index: 1;
+}
+
+
+.app-pages.discovery-active {
+   transform: translateX(0);
+}
+
+
+.app-pages.lyrics-active {
+   transform: translateX(-200vw);
+}
+
+
+.app-page {
+   position: relative;
+
+
+   width: 100vw;
+   height: 100vh;
+
+
+   flex-shrink: 0;
+
+
+   overflow: hidden;
+}
+
+
+
+
+/* =====================================================
+  PAGE BUTTON
+===================================================== */
+
+
+.page-button {
+   position: absolute;
+
+
+   top: 28px;
+
+
+   width: 48px;
+   height: 48px;
+
+
+   border: 1px solid rgba(255,255,255,0.18);
+   border-radius: 50%;
+
+
+   background: rgba(255,255,255,0.10);
+
+
+   backdrop-filter: blur(20px);
+   -webkit-backdrop-filter: blur(20px);
+
+
+   color: white;
+
+
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+
+   cursor: pointer;
+
+
+   z-index: 100;
+
+
+   transition:
+       transform 0.25s ease,
+       background 0.25s ease,
+       border-color 0.25s ease;
+}
+
+
+.page-button:hover {
+   transform: scale(1.08);
+
+
+   background:
+       rgba(255,255,255,0.18);
+
+
+   border-color:
+       rgba(255,255,255,0.30);
+}
+
+
+.page-button:active {
+   transform: scale(0.94);
+}
+
+
+.page-button svg {
+   width: 21px;
+   height: 21px;
+}
+
+
+
+
+/* =====================================================
+  HOME BUTTONS
+===================================================== */
+
+
+.discovery-page-button {
+   left: 28px;
+}
+
+
+.lyrics-page-button {
+   right: 28px;
+}
+
+
+
+
+/* =====================================================
+  HOME
+===================================================== */
+
+
+.home-page {
+   display: flex;
+
+
+   flex-direction: column;
+
+
+   justify-content: center;
+
+
+   align-items: center;
+}
+
+
+
+
+/* =====================================================
+  PLAYER
+===================================================== */
+
+
+.player {
+   width: min(850px, 88vw);
+   max-width: 800px;
+
+
+   text-align: center;
+
+
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+
+
+
+/* =====================================================
+  STATUS
+===================================================== */
+
+
+.status {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+
+   gap: 8px;
+
+
+   height: 16px;
+
+
+   margin-bottom: 22px;
+
+
+   font-size: 11px;
+   letter-spacing: 2px;
+   font-weight: 600;
+
+
+   opacity: 0.55;
+}
+
+
+.status-dot {
+   width: 6px;
+   height: 6px;
+
+
+   flex-shrink: 0;
+
+
+   border-radius: 50%;
+
+
+   background: white;
+
+
+   box-shadow:
+       0 0 12px rgba(255,255,255,0.9);
+
+
+   animation:
+       statusPulse
+       2s
+       ease-in-out
+       infinite;
+}
+
+
+@keyframes statusPulse {
+   0%,
+   100% {
+       opacity: 0.35;
+       transform: scale(0.8);
+   }
+
+
+   50% {
+       opacity: 1;
+       transform: scale(1.2);
+   }
+}
+
+
+body.paused .status-dot {
+   opacity: 0;
+   transform: scale(0);
+   animation: none;
+}
+
+
+body.paused .status {
+   opacity: 0.40;
+}
+
+
+
+
+/* =====================================================
+  COVER
+===================================================== */
+
+
+.cover-container {
+   position: relative;
+
+   perspective: 1200px;
+
+
+   width: min(430px, 62vw);
+
+
+   aspect-ratio: 1;
+
+
+   margin-bottom: 35px;
+}
+
+
+.cover {
+   width: 100%;
+   height: 100%;
+
+
+   border-radius: 28px;
+
+
+   background:
+       linear-gradient(
+           135deg,
+           #333,
+           #111
+       );
+
+
+   background-size: cover;
+   background-position: center;
+
+
+   box-shadow:
+       0 35px 90px rgba(0,0,0,0.55),
+       0 0 100px rgba(255,255,255,0.06);
+
+
+   transform: scale(1);
+
+
+   filter:
+       brightness(1)
+       saturate(1);
+
+
+   transition:
+       transform 1.2s cubic-bezier(0.22,1,0.36,1),
+       filter 1.2s cubic-bezier(0.22,1,0.36,1),
+       box-shadow 1.2s cubic-bezier(0.22,1,0.36,1);
+
+   transform-style: preserve-3d;
+   backface-visibility: hidden;
+}
+
+.cover.cover-flipping {
+   animation: coverMemoryFlip .84s cubic-bezier(.5, 0, .2, 1) both;
+   transition: none;
+}
+
+@keyframes coverMemoryFlip {
+   0% { transform: rotateY(0) scale(1); }
+   47% { transform: rotateY(90deg) scale(.93); }
+   54% { transform: rotateY(90deg) scale(.93); }
+   78% { transform: rotateY(-10deg) scale(1.07); }
+   100% { transform: rotateY(0) scale(1); }
+}
+
+
+body.paused .cover {
+   transform: scale(0.84);
+
+
+   filter:
+       brightness(0.66)
+       saturate(0.76);
+
+
+   box-shadow:
+       0 25px 60px rgba(0,0,0,0.45),
+       0 0 60px rgba(255,255,255,0.035);
+}
+
+
+
+
+/* =====================================================
+  SONG CHANGE
+===================================================== */
+
+
+.song-changing-out {
+   animation:
+       fadeOutSong
+       0.45s
+       ease
+       forwards;
+}
+
+
+.song-changing-in {
+   animation:
+       fadeInSong
+       0.65s
+       cubic-bezier(0.22,1,0.36,1)
+       forwards;
+}
+
+
+@keyframes fadeOutSong {
+   from {
+       opacity: 1;
+       transform: scale(1);
+   }
+
+
+   to {
+       opacity: 0;
+       transform: scale(0.985);
+   }
+}
+
+
+@keyframes fadeInSong {
+   from {
+       opacity: 0;
+       transform: scale(0.985);
+   }
+
+
+   to {
+       opacity: 1;
+       transform: scale(1);
+   }
+}
+
+
+
+
+/* =====================================================
+  SONG INFO
+===================================================== */
+
+
+.song-info {
+   width: 100%;
+   margin-bottom: 30px;
+}
+
+
+.artist {
+   font-size: 19px;
+   font-weight: 500;
+
+
+   opacity: 0.62;
+
+
+   margin-bottom: 8px;
+
+
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
+
+
+.title {
+   font-size: clamp(32px, 5vw, 56px);
+
+
+   font-weight: 750;
+
+
+   letter-spacing: -1.8px;
+
+
+   line-height: 1.05;
+
+
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+
+
+   text-shadow:
+       0 3px 20px rgba(0,0,0,0.25);
+}
+
+
+
+
+/* =====================================================
+  LOGIN
+===================================================== */
+
+
+.login-button {
+   border: none;
+
+
+   border-radius: 100px;
+
+
+   padding: 13px 23px;
+
+
+   background: white;
+
+
+   color: black;
+
+
+   font-size: 14px;
+   font-weight: 600;
+
+
+   cursor: pointer;
+
+
+   margin-bottom: 32px;
+
+
+   transition:
+       transform 0.2s ease,
+       opacity 0.3s ease;
+}
+
+
+.login-button:hover {
+   transform: scale(1.04);
+}
+
+
+.login-button:active {
+   transform: scale(0.97);
+}
+
+
+
+
+/* =====================================================
+  PROGRESS
+===================================================== */
+
+
+.progress-container {
+   width: min(700px, 100%);
+   opacity: 0.8;
+}
+
+
+.progress {
+   width: 100%;
+   height: 4px;
+
+
+   border-radius: 100px;
+
+
+   background:
+       rgba(255,255,255,0.2);
+
+
+   overflow: hidden;
+}
+
+
+.progress-bar {
+   width: 0%;
+   height: 100%;
+
+
+   background: white;
+
+
+   border-radius: 100px;
+
+
+   transition:
+       width 0.25s linear;
+}
+
+
+.time {
+   display: flex;
+   justify-content: space-between;
+
+
+   margin-top: 9px;
+
+
+   font-size: 12px;
+
+
+   opacity: 0.45;
+}
+
+
+
+
+/* =====================================================
+  DISCOVERY
+===================================================== */
+
+
+.discovery-page {
+   display: flex;
+
+
+   flex-direction: column;
+
+
+   align-items: center;
+
+
+   justify-content: center;
+
+
+   padding: 70px 0 50px;
+}
+
+
+.discovery-back-button {
+   left: 28px;
+}
+
+
+.discovery-header {
+   position: relative;
+   z-index: 10;
+
+
+   width: min(900px, 88vw);
+
+
+   text-align: center;
+
+
+   margin-bottom: 22px;
+
+
+   pointer-events: none;
+}
+
+
+.discovery-label {
+   font-size: 11px;
+   letter-spacing: 3px;
+   font-weight: 700;
+
+
+   opacity: 0.42;
+
+
+   margin-bottom: 10px;
+}
+
+
+.discovery-selected-source {
+   font-size: 9px;
+   letter-spacing: 2px;
+   font-weight: 650;
+
+
+   opacity: 0.30;
+
+
+   margin-bottom: 8px;
+}
+
+
+.discovery-selected-artist {
+   font-size: 16px;
+   font-weight: 500;
+
+
+   opacity: 0.53;
+
+
+   margin-bottom: 4px;
+}
+
+
+.discovery-selected-title {
+   font-size: clamp(27px, 4vw, 45px);
+
+
+   line-height: 1.05;
+
+
+   letter-spacing: -1.5px;
+
+
+   font-weight: 750;
+}
+
+
+
+
+/* =====================================================
+  DISCOVERY VIEWPORT
+===================================================== */
+
+
+.discovery-viewport {
+   position: relative;
+
+
+   width: 100vw;
+
+
+   height: min(400px, 53vh);
+
+
+   overflow: hidden;
+
+
+   cursor: grab;
+
+
+   touch-action: pan-y;
+
+
+   user-select: none;
+}
+
+
+.discovery-viewport:active {
+   cursor: grabbing;
+}
+
+
+.discovery-track {
+   position: absolute;
+
+
+   left: 0;
+   top: 50%;
+
+
+   display: flex;
+   align-items: center;
+
+
+   gap: 24px;
+
+
+   transform: translateY(-50%);
+
+
+   transition:
+       transform
+       0.7s
+       cubic-bezier(0.22,1,0.36,1);
+
+
+   will-change: transform;
+}
+
+
+.discovery-card {
+   flex: 0 0 256px;
+
+
+   width: 256px;
+
+
+   padding: 0;
+
+
+   border: none;
+
+
+   background: transparent;
+
+
+   color: white;
+
+
+   cursor: pointer;
+
+
+   text-align: center;
+
+
+   transform: scale(0.72);
+
+
+   opacity: 0.12;
+
+
+   filter:
+       blur(1.2px)
+       saturate(0.55);
+
+
+   transition:
+       transform 0.7s cubic-bezier(0.22,1,0.36,1),
+       opacity 0.7s ease,
+       filter 0.7s ease;
+}
+
+
+.discovery-card.near {
+   transform: scale(0.86);
+
+
+   opacity: 0.48;
+
+
+   filter:
+       blur(0)
+       saturate(0.82);
+}
+
+
+.discovery-card.selected {
+   transform: scale(1);
+
+
+   opacity: 1;
+
+
+   filter: none;
+
+
+   z-index: 5;
+}
+
+
+.discovery-card.far {
+   transform: scale(0.72);
+
+
+   opacity: 0.12;
+}
+
+
+.discovery-cover {
+   width: 256px;
+
+
+   aspect-ratio: 1;
+
+
+   border-radius: 24px;
+
+
+   background-size: cover;
+   background-position: center;
+
+
+   box-shadow:
+       0 35px 80px rgba(0,0,0,0.55),
+       0 0 80px rgba(255,255,255,0.05);
+}
+
+
+.discovery-card.selected .discovery-cover {
+   box-shadow:
+       0 40px 100px rgba(0,0,0,0.62),
+       0 0 90px rgba(255,255,255,0.08);
+}
+
+
+.discovery-card-info {
+   padding: 14px 8px 0;
+
+
+   opacity: 0;
+
+
+   transform: translateY(8px);
+
+
+   transition:
+       opacity 0.45s ease,
+       transform 0.45s ease;
+}
+
+
+.discovery-card.selected .discovery-card-info {
+   opacity: 1;
+
+
+   transform: translateY(0);
+}
+
+
+.discovery-card-title {
+   font-size: 16px;
+   font-weight: 650;
+
+
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
+
+
+.discovery-card-artist {
+   margin-top: 4px;
+
+
+   font-size: 13px;
+
+
+   opacity: 0.48;
+}
+
+
+.discovery-card-source {
+   margin-top: 6px;
+
+
+   font-size: 8px;
+
+
+   letter-spacing: 1.4px;
+
+
+   font-weight: 600;
+
+
+   opacity: 0.25;
+}
+
+
+.discovery-message {
+   position: absolute;
+
+
+   inset: 0;
+
+
+   display: flex;
+
+
+   align-items: center;
+   justify-content: center;
+
+
+   text-align: center;
+
+
+   padding: 30px;
+
+
+   font-size: 11px;
+
+
+   letter-spacing: 2px;
+
+
+   font-weight: 600;
+
+
+   opacity: 0.38;
+
+
+   pointer-events: none;
+}
+
+
+.discovery-controls {
+   position: relative;
+
+
+   z-index: 20;
+
+
+   display: flex;
+
+
+   align-items: center;
+
+
+   justify-content: center;
+
+
+   gap: 26px;
+
+
+   margin-top: 20px;
+}
+
+
+.discovery-hint {
+   font-size: 9px;
+
+
+   letter-spacing: 2.5px;
+
+
+   font-weight: 600;
+
+
+   opacity: 0.30;
+}
+
+
+.discovery-arrow {
+   width: 42px;
+   height: 42px;
+
+
+   border-radius: 50%;
+
+
+   border:
+       1px solid rgba(255,255,255,0.14);
+
+
+   background:
+       rgba(255,255,255,0.07);
+
+
+   backdrop-filter: blur(18px);
+   -webkit-backdrop-filter: blur(18px);
+
+
+   color: white;
+
+
+   display: flex;
+
+
+   align-items: center;
+   justify-content: center;
+
+
+   cursor: pointer;
+
+
+   transition:
+       transform 0.2s ease,
+       background 0.2s ease;
+}
+
+
+.discovery-arrow:hover {
+   transform: scale(1.08);
+
+
+   background:
+       rgba(255,255,255,0.15);
+}
+
+
+.discovery-arrow:active {
+   transform: scale(0.92);
+}
+
+
+.discovery-arrow svg {
+   width: 18px;
+   height: 18px;
+}
+
+
+
+
+/* =====================================================
+  LIVE LYRICS — NEW
+===================================================== */
+
+
+.lyrics-page {
+   display: flex;
+
+
+   flex-direction: column;
+
+
+   align-items: center;
+
+
+   padding:
+       70px 6vw 30px;
+}
+
+
+
+
+/* =====================================================
+  LYRICS HEADER
+===================================================== */
+
+
+.lyrics-back-button {
+   left: 28px;
+}
+
+
+.lyrics-header {
+   position: relative;
+
+
+   z-index: 10;
+
+
+   width: min(1000px, 100%);
+
+
+   text-align: center;
+
+
+   margin-bottom: 15px;
+
+
+   flex-shrink: 0;
+}
+
+
+.lyrics-label {
+   font-size: 10px;
+
+
+   letter-spacing: 4px;
+
+
+   font-weight: 800;
+
+
+   opacity: 0.35;
+
+
+   margin-bottom: 8px;
+}
+
+
+.lyrics-artist {
+   font-size: 15px;
+
+
+   font-weight: 500;
+
+
+   opacity: 0.42;
+
+
+   margin-bottom: 3px;
+
+
+   transition:
+       opacity 0.4s ease,
+       transform 0.5s ease;
+}
+
+
+.lyrics-title {
+   font-size:
+       clamp(
+           25px,
+           3.8vw,
+           46px
+       );
+
+
+   font-weight: 800;
+
+
+   letter-spacing: -1.8px;
+
+
+   line-height: 1;
+
+
+   white-space: nowrap;
+
+
+   overflow: hidden;
+
+
+   text-overflow: ellipsis;
+
+
+   text-shadow:
+       0 5px 35px rgba(0,0,0,0.35);
+}
+
+
+
+
+/* =====================================================
+  LYRICS CONTAINER
+===================================================== */
+
+
+.lyrics-container {
+   position: relative;
+
+
+   z-index: 2;
+
+
+   width: min(1050px, 100%);
+
+
+   flex: 1;
+
+
+   min-height: 0;
+
+
+   overflow: hidden;
+
+
+   mask-image:
+       linear-gradient(
+           to bottom,
+           transparent 0%,
+           black 13%,
+           black 84%,
+           transparent 100%
+       );
+
+
+   -webkit-mask-image:
+       linear-gradient(
+           to bottom,
+           transparent 0%,
+           black 13%,
+           black 84%,
+           transparent 100%
+       );
+}
+
+
+.lyrics {
+   height: 100%;
+
+
+   overflow-y: auto;
+
+
+   scroll-behavior: smooth;
+
+
+   padding:
+       34vh
+       20px
+       45vh;
+
+
+   scrollbar-width: none;
+
+
+   text-align: center;
+}
+
+
+.lyrics::-webkit-scrollbar {
+   display: none;
+}
+
+
+
+
+/* =====================================================
+  LYRIC LINE
+===================================================== */
+
+
+.lyrics-line {
+   position: relative;
+
+
+   width: 100%;
+
+
+   margin:
+       0 auto
+       48px;
+
+
+   padding:
+       4px 0;
+
+
+   font-size:
+       clamp(
+           27px,
+           4vw,
+           52px
+       );
+
+
+   line-height: 1.08;
+
+
+   font-weight: 800;
+
+
+   letter-spacing: -1.8px;
+
+
+   color: white;
+
+
+   opacity: 0.11;
+
+
+   transform:
+       translateY(20px)
+       scale(0.88)
+       rotateX(10deg);
+
+
+   filter:
+       blur(5px);
+
+
+   transform-origin: center center;
+
+
+   transition:
+       opacity 0.55s cubic-bezier(0.22,1,0.36,1),
+       transform 0.65s cubic-bezier(0.22,1,0.36,1),
+       filter 0.55s ease;
+
+
+   perspective: 900px;
+}
+
+
+
+
+/* =====================================================
+  PREVIOUS / NEXT
+===================================================== */
+
+
+.lyrics-line.near {
+   opacity: 0.32;
+
+
+   transform:
+       translateY(8px)
+       scale(0.94);
+
+
+   filter:
+       blur(1.5px);
+}
+
+
+.lyrics-line.active {
+   opacity: 1;
+
+
+   transform:
+       translateY(0)
+       scale(1.04);
+
+
+   filter:
+       blur(0);
+
+
+   text-shadow:
+       0 0 12px rgba(255,255,255,0.12),
+       0 0 40px rgba(255,255,255,0.08);
+}
+
+
+
+
+/* =====================================================
+  WORDS
+===================================================== */
+
+
+.lyric-word {
+   display: inline-block;
+
+
+   opacity: 0.08;
+
+
+   transform:
+       translateY(28px)
+       scale(0.72)
+       rotateX(35deg)
+       rotateZ(-2deg);
+
+
+   filter:
+       blur(8px);
+
+
+   transform-origin:
+       center bottom;
+
+
+   transition:
+       opacity 0.28s ease,
+       transform 0.45s cubic-bezier(0.16,1,0.3,1),
+       filter 0.35s ease;
+
+
+   will-change:
+       transform,
+       opacity,
+       filter;
+}
+
+
+
+
+/* parola già cantata */
+
+
+.lyric-word.sung {
+   opacity: 1;
+
+
+   transform:
+       translateY(0)
+       scale(1)
+       rotateX(0)
+       rotateZ(0);
+
+
+   filter:
+       blur(0);
+
+
+   text-shadow:
+       0 0 12px rgba(255,255,255,0.18),
+       0 0 35px rgba(255,255,255,0.08);
+}
+
+
+
+
+/* parola appena pronunciata */
+
+
+.lyric-word.current {
+   opacity: 1;
+
+
+   transform:
+       translateY(-5px)
+       scale(1.16)
+       rotateZ(-1deg);
+
+
+   filter:
+       blur(0);
+
+
+   text-shadow:
+       0 0 8px rgba(255,255,255,0.75),
+       0 0 25px rgba(255,255,255,0.4),
+       0 0 60px rgba(255,255,255,0.18);
+
+
+   animation:
+       wordImpact
+       0.45s
+       cubic-bezier(0.16,1,0.3,1);
+}
+
+
+@keyframes wordImpact {
+   0% {
+       transform:
+           translateY(20px)
+           scale(0.55)
+           rotateZ(-6deg);
+
+
+       filter:
+           blur(10px);
+   }
+
+
+   55% {
+       transform:
+           translateY(-8px)
+           scale(1.23)
+           rotateZ(2deg);
+   }
+
+
+   100% {
+       transform:
+           translateY(-5px)
+           scale(1.16)
+           rotateZ(-1deg);
+
+
+       filter:
+           blur(0);
+   }
+}
+
+
+
+
+/* =====================================================
+  LINE IMPACT
+===================================================== */
+
+
+.lyrics-line.active::before {
+   content: "";
+
+
+   position: absolute;
+
+
+   left: 50%;
+   top: 50%;
+
+
+   width: 10px;
+   height: 10px;
+
+
+   border-radius: 50%;
+
+
+   background: white;
+
+
+   opacity: 0;
+
+
+   pointer-events: none;
+
+
+   transform:
+       translate(-50%, -50%)
+       scale(1);
+
+
+   animation:
+       lyricExplosion
+       0.75s
+       ease-out;
+}
+
+
+@keyframes lyricExplosion {
+   0% {
+       opacity: 0.22;
+
+
+       box-shadow:
+           0 0 0 0
+           rgba(255,255,255,0.4);
+   }
+
+
+   100% {
+       opacity: 0;
+
+
+       box-shadow:
+           0 0 0 170px
+           rgba(255,255,255,0);
+   }
+}
+
+
+
+
+/* =====================================================
+  LYRICS MESSAGE
+===================================================== */
+
+
+.lyrics-message {
+   text-align: center;
+
+
+   padding-top: 30vh;
+
+
+   font-size: 16px;
+
+
+   line-height: 1.5;
+
+
+   letter-spacing: 0.5px;
+
+
+   opacity: 0.35;
+}
+
+
+
+
+/* =====================================================
+  MOBILE
+===================================================== */
+
+
+@media (max-width: 600px) {
+
+
+   .page-button {
+       top: 18px;
+
+
+       width: 44px;
+       height: 44px;
+   }
+
+
+   .discovery-page-button {
+       left: 18px;
+   }
+
+
+   .lyrics-page-button {
+       right: 18px;
+   }
+
+
+   .discovery-back-button,
+   .lyrics-back-button {
+       left: 18px;
+   }
+
+
+   .discovery-page {
+       padding:
+           70px 0 30px;
+   }
+
+
+   .discovery-header {
+       width: 82vw;
+
+
+       margin-bottom: 12px;
+   }
+
+
+   .discovery-viewport {
+       height: 330px;
+   }
+
+
+   .discovery-card {
+       flex-basis: 210px;
+       width: 210px;
+   }
+
+
+   .discovery-cover {
+       width: 210px;
+
+
+       border-radius: 20px;
+   }
+
+
+   .discovery-controls {
+       gap: 16px;
+   }
+
+
+   .discovery-hint {
+       font-size: 8px;
+       letter-spacing: 1.8px;
+   }
+
+
+   .lyrics-page {
+       padding:
+           70px 18px 20px;
+   }
+
+
+   .lyrics-header {
+       margin-bottom: 5px;
+   }
+
+
+   .lyrics {
+       padding:
+           34vh
+           4px
+           45vh;
+   }
+
+
+   .lyrics-line {
+       font-size: 29px;
+
+
+       line-height: 1.08;
+
+
+       letter-spacing: -1px;
+
+
+       margin-bottom: 38px;
+   }
+
+
+   .lyric-word.current {
+       transform:
+           translateY(-4px)
+           scale(1.09);
+   }
+}
+
+
+
+
+/* =====================================================
+  SHORT SCREENS
+===================================================== */
+
+
+@media (max-height: 700px) {
+
+
+   .cover-container {
+       width:
+           min(
+               320px,
+               45vh
+           );
+
+
+       margin-bottom: 22px;
+   }
+
+
+   .status {
+       margin-bottom: 12px;
+   }
+
+
+   .song-info {
+       margin-bottom: 20px;
+   }
+
+
+   .discovery-viewport {
+       height: 330px;
+   }
+
+
+   .discovery-card {
+       flex-basis: 220px;
+       width: 220px;
+   }
+
+
+   .discovery-cover {
+       width: 220px;
+   }
+
+
+   .lyrics-line {
+       margin-bottom: 28px;
+   }
+}
+
+
+
+
+/* =====================================================
+  RESPONSIVE PLAYER
+===================================================== */
+
+
+.song-info,
+.progress-container {
+   width: 100%;
+}
+
+
+/* =====================================================
+  LIVE LYRICS — STYLE SWITCHER
+===================================================== */
+
+.lyrics-style-switcher {
+   position: relative;
+   z-index: 12;
+   display: inline-flex;
+   gap: 4px;
+   padding: 4px;
+   margin: 4px 0 10px;
+   border: 1px solid rgba(255, 255, 255, 0.14);
+   border-radius: 999px;
+   background: rgba(10, 10, 16, 0.26);
+   box-shadow: 0 10px 32px rgba(0, 0, 0, 0.14);
+   backdrop-filter: blur(16px);
+}
+
+.lyrics-style-button {
+   border: 0;
+   border-radius: 999px;
+   padding: 8px 13px;
+   color: rgba(255, 255, 255, 0.52);
+   background: transparent;
+   font: inherit;
+   font-size: 10px;
+   font-weight: 800;
+   letter-spacing: 1px;
+   cursor: pointer;
+   transition: color .25s ease, background .25s ease, box-shadow .25s ease, transform .25s ease;
+}
+
+.lyrics-style-button:hover {
+   color: rgba(255, 255, 255, .9);
+}
+
+.lyrics-style-button.is-selected {
+   color: white;
+   background: rgba(255, 255, 255, .16);
+   box-shadow: 0 3px 14px rgba(0, 0, 0, .16);
+}
+
+.lyrics-style-button:active {
+   transform: scale(.94);
+}
+
+
+/* =====================================================
+  LIVE LYRICS — 3D EMERGE
+===================================================== */
+
+.lyrics-style-3d .lyrics-page {
+   background: radial-gradient(ellipse at 50% 46%, rgba(255, 255, 255, .075), transparent 42%);
+}
+
+.lyrics-style-3d .lyrics-container {
+   isolation: isolate;
+   perspective: 1050px;
+   perspective-origin: 50% 48%;
+   mask-image: linear-gradient(to bottom, transparent 0%, black 9%, black 89%, transparent 100%);
+   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 9%, black 89%, transparent 100%);
+}
+
+.lyrics-style-3d .lyrics-container::before,
+.lyrics-style-3d .lyrics-container::after {
+   content: "";
+   position: absolute;
+   z-index: -1;
+   left: 50%;
+   top: 48%;
+   width: min(70vw, 720px);
+   height: min(70vw, 720px);
+   border-radius: 50%;
+   pointer-events: none;
+   transform: translate(-50%, -50%) translateZ(-300px);
+}
+
+.lyrics-style-3d .lyrics-container::before {
+   background: radial-gradient(circle, rgba(255, 255, 255, .10), rgba(255, 255, 255, 0) 64%);
+   filter: blur(18px);
+   animation: emergeAtmosphere 7s ease-in-out infinite alternate;
+}
+
+.lyrics-style-3d .lyrics-container::after {
+   border: 1px solid rgba(255, 255, 255, .09);
+   box-shadow: 0 0 90px rgba(255, 255, 255, .08), inset 0 0 60px rgba(255, 255, 255, .04);
+   opacity: .36;
+   animation: emergeOrbit 14s linear infinite;
+}
+
+.lyrics-style-3d .lyrics {
+   transform-style: preserve-3d;
+   padding-top: 37vh;
+   padding-bottom: 48vh;
+}
+
+.lyrics-style-3d .lyrics-line {
+   --lyric-distance: 4;
+   margin-bottom: 54px;
+   transform-style: preserve-3d;
+   opacity: .035;
+   filter: blur(9px);
+   transform: translate3d(0, calc(var(--lyric-distance) * 11px), calc(var(--lyric-distance) * -82px)) rotateX(calc(var(--lyric-distance) * -5deg)) scale(.68);
+   text-shadow: 0 24px 32px rgba(0, 0, 0, .42);
+   transition: opacity .7s cubic-bezier(.16, 1, .3, 1), transform .8s cubic-bezier(.16, 1, .3, 1), filter .65s ease, text-shadow .6s ease;
+}
+
+.lyrics-style-3d .lyrics-line.past {
+   opacity: .18;
+   transform: translate3d(0, 12px, -185px) rotateX(15deg) scale(.75);
+   filter: blur(3.5px);
+}
+
+.lyrics-style-3d .lyrics-line.future {
+   opacity: .13;
+   transform: translate3d(0, -8px, -140px) rotateX(-13deg) scale(.79);
+   filter: blur(4px);
+}
+
+.lyrics-style-3d .lyrics-line.near.past {
+   opacity: .38;
+   transform: translate3d(0, 8px, -68px) rotateX(8deg) scale(.9);
+   filter: blur(1.2px);
+}
+
+.lyrics-style-3d .lyrics-line.near.future {
+   opacity: .34;
+   transform: translate3d(0, -6px, -46px) rotateX(-7deg) scale(.92);
+   filter: blur(1px);
+}
+
+.lyrics-style-3d .lyrics-line.active {
+   opacity: 1;
+   filter: blur(0);
+   transform: translate3d(0, 0, 68px) rotateX(0) scale(1.08);
+   text-shadow: 0 5px 0 rgba(255, 255, 255, .10), 0 15px 24px rgba(0, 0, 0, .38), 0 0 46px rgba(255, 255, 255, .19);
+}
+
+.lyrics-style-3d .lyric-word {
+   opacity: .04;
+   transform: translate3d(0, 28px, -90px) rotateX(31deg) scale(.65);
+   filter: blur(8px);
+}
+
+.lyrics-style-3d .lyric-word.sung {
+   opacity: .8;
+   transform: translate3d(0, 0, 0) rotateX(0) scale(1);
+   filter: blur(0);
+   text-shadow: 0 4px 12px rgba(0, 0, 0, .32);
+}
+
+.lyrics-style-3d .lyric-word.current {
+   position: relative;
+   z-index: 2;
+   opacity: 1;
+   transform: translate3d(0, -8px, 120px) rotateX(-5deg) scale(1.22);
+   filter: blur(0);
+   text-shadow: 0 3px 0 rgba(255, 255, 255, .23), 0 12px 24px rgba(0, 0, 0, .34), 0 0 17px rgba(255, 255, 255, .85), 0 0 62px rgba(255, 255, 255, .28);
+   animation: emergeWord .58s cubic-bezier(.16, 1, .3, 1);
+}
+
+.lyrics-style-3d .lyrics-line.active::before {
+   animation-duration: 1s;
+   box-shadow: 0 0 55px 12px rgba(255, 255, 255, .12);
+}
+
+@keyframes emergeWord {
+   0% { transform: translate3d(0, 32px, -160px) rotateX(31deg) scale(.52); filter: blur(12px); opacity: 0; }
+   58% { transform: translate3d(0, -12px, 142px) rotateX(-8deg) scale(1.3); opacity: 1; }
+   100% { transform: translate3d(0, -8px, 120px) rotateX(-5deg) scale(1.22); filter: blur(0); }
+}
+
+@keyframes emergeAtmosphere {
+   from { transform: translate(-50%, -50%) scale(.88); opacity: .36; }
+   to { transform: translate(-50%, -50%) scale(1.12); opacity: .72; }
+}
+
+@keyframes emergeOrbit {
+   to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@media (max-width: 600px) {
+   .lyrics-style-switcher { margin-bottom: 5px; }
+   .lyrics-style-button { padding: 7px 10px; font-size: 9px; }
+   .lyrics-style-3d .lyrics-line { margin-bottom: 42px; }
+   .lyrics-style-3d .lyrics-line.active { transform: translate3d(0, 0, 40px) scale(1.03); }
+   .lyrics-style-3d .lyric-word.current { transform: translate3d(0, -5px, 70px) scale(1.13); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+   .lyrics-style-3d .lyrics-container::before,
+   .lyrics-style-3d .lyrics-container::after,
+   .lyrics-style-3d .lyric-word.current { animation: none; }
+}
+
+
+/* =====================================================
+  LIVE LYRICS — SPAZIALE
+  A typographic corridor: depth and movement, no glow.
+===================================================== */
+
+.lyrics-style-spatial .lyrics-page {
+   background: #0a0b0e;
+}
+
+.lyrics-style-spatial .lyrics-container {
+   isolation: isolate;
+   perspective: 780px;
+   perspective-origin: 50% 50%;
+   mask-image: linear-gradient(to bottom, transparent, black 10%, black 88%, transparent);
+   -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 88%, transparent);
+}
+
+.lyrics-style-spatial .lyrics-container::before {
+   content: "";
+   position: absolute;
+   inset: 10% 12%;
+   z-index: -1;
+   border: 1px solid rgba(255, 255, 255, .08);
+   border-radius: 50%;
+   transform: rotateX(67deg) scale(1.25);
+   opacity: .4;
+}
+
+.lyrics-style-spatial .lyrics {
+   transform-style: preserve-3d;
+   padding-top: 39vh;
+   padding-bottom: 52vh;
+}
+
+.lyrics-style-spatial .lyrics-line {
+   --lyric-distance: 4;
+   margin-bottom: 62px;
+   color: #e7e7e4;
+   opacity: .05;
+   filter: blur(7px);
+   transform-style: preserve-3d;
+   transform: translate3d(0, calc(var(--lyric-distance) * 18px), calc(var(--lyric-distance) * -185px)) rotateX(calc(var(--lyric-distance) * -8deg)) scale(.56);
+   text-shadow: none;
+   transition: opacity .8s ease, transform .9s cubic-bezier(.16, 1, .3, 1), filter .7s ease;
+}
+
+.lyrics-style-spatial .lyrics-line.past {
+   opacity: .22;
+   filter: blur(2.5px);
+   transform: translate3d(0, 28px, -310px) rotateX(24deg) scale(.66);
+}
+
+.lyrics-style-spatial .lyrics-line.future {
+   opacity: .18;
+   filter: blur(3px);
+   transform: translate3d(0, -24px, -230px) rotateX(-20deg) scale(.72);
+}
+
+.lyrics-style-spatial .lyrics-line.near.past {
+   opacity: .52;
+   filter: blur(.7px);
+   transform: translate3d(0, 12px, -100px) rotateX(11deg) scale(.88);
+}
+
+.lyrics-style-spatial .lyrics-line.near.future {
+   opacity: .48;
+   filter: blur(.8px);
+   transform: translate3d(0, -10px, -74px) rotateX(-10deg) scale(.91);
+}
+
+.lyrics-style-spatial .lyrics-line.active {
+   color: #fff;
+   opacity: 1;
+   filter: none;
+   transform: translate3d(0, 0, 24px) rotateX(0) scale(1.02);
+   text-shadow: none;
+}
+
+.lyrics-style-spatial .lyrics-line.active::before {
+   content: none;
+}
+
+.lyrics-style-spatial .lyric-word {
+   opacity: .08;
+   filter: blur(5px);
+   transform: translate3d(0, 14px, -130px) rotateX(22deg) scale(.72);
+}
+
+.lyrics-style-spatial .lyric-word.sung {
+   opacity: .76;
+   filter: none;
+   transform: translate3d(0, 0, 0) rotateX(0) scale(1);
+   text-shadow: none;
+}
+
+.lyrics-style-spatial .lyric-word.current {
+   opacity: 1;
+   filter: none;
+   transform: translate3d(0, -2px, 58px) rotateX(-4deg) scale(1.1);
+   text-shadow: none;
+   animation: spatialWord .55s cubic-bezier(.16, 1, .3, 1);
+}
+
+@keyframes spatialWord {
+   from { opacity: 0; transform: translate3d(0, 12px, -210px) rotateX(28deg) scale(.62); }
+   to { opacity: 1; transform: translate3d(0, -2px, 58px) rotateX(-4deg) scale(1.1); }
+}
+
+
+/* =====================================================
+  LIVE LYRICS — VINTAGE
+===================================================== */
+
+.lyrics-style-vintage .lyrics-page {
+   background: #201d19;
+   color: #dfcfad;
+}
+
+.lyrics-style-vintage .lyrics-container {
+   background: repeating-linear-gradient(0deg, rgba(255, 245, 210, .025) 0 1px, transparent 1px 4px);
+}
+
+.lyrics-style-vintage .lyrics-line,
+.lyrics-style-vintage .lyric-word {
+   font-family: "Courier New", Courier, monospace;
+   font-weight: 700;
+   letter-spacing: -.9px;
+   text-shadow: none;
+}
+
+.lyrics-style-vintage .lyrics-line {
+   color: #9e927b;
+   filter: sepia(.45) contrast(.9);
+   transform: translateY(14px) scale(.91) rotate(-.3deg);
+}
+
+.lyrics-style-vintage .lyrics-line.near {
+   color: #c2b293;
+   filter: sepia(.35) contrast(.95);
+}
+
+.lyrics-style-vintage .lyrics-line.active {
+   color: #ead7ad;
+   filter: sepia(.2) contrast(1.05);
+   transform: translateY(0) scale(1) rotate(.15deg);
+   text-shadow: 1px 0 rgba(116, 61, 34, .32), -1px 0 rgba(244, 216, 156, .16);
+}
+
+.lyrics-style-vintage .lyrics-line.active::before {
+   content: none;
+}
+
+.lyrics-style-vintage .lyric-word {
+   opacity: .1;
+   filter: blur(1px);
+   transform: translateY(3px) scale(.97);
+}
+
+.lyrics-style-vintage .lyric-word.sung,
+.lyrics-style-vintage .lyric-word.current {
+   color: #ead7ad;
+   opacity: 1;
+   filter: none;
+   transform: translateY(0) scale(1);
+   text-shadow: none;
+}
+
+.lyrics-style-vintage .lyric-word.current {
+   animation: typewriterTap .16s steps(2, end);
+}
+
+@keyframes typewriterTap {
+   0% { opacity: .2; transform: translateX(-2px); }
+   100% { opacity: 1; transform: translateX(0); }
+}
+
+
+/* =====================================================
+  LIVE LYRICS — GRAFFITI
+===================================================== */
+
+.lyrics-style-graffiti .lyrics-container {
+   background: radial-gradient(ellipse at 25% 45%, rgba(92, 78, 255, .15), transparent 46%), radial-gradient(ellipse at 78% 58%, rgba(255, 65, 170, .13), transparent 50%);
+}
+
+.lyrics-style-graffiti .lyrics-line {
+   color: transparent;
+   background: linear-gradient(105deg, #6de3ff, #a87dff 38%, #ff76ba 68%, #ffce72);
+   background-size: 240% 100%;
+   -webkit-background-clip: text;
+   background-clip: text;
+   filter: blur(4px) saturate(1.25);
+   transform: translateY(22px) scale(.87) skewX(-4deg);
+}
+
+.lyrics-style-graffiti .lyrics-line.near {
+   filter: blur(1px) saturate(1.35);
+}
+
+.lyrics-style-graffiti .lyrics-line.active {
+   filter: none;
+   transform: translateY(0) scale(1.05) skewX(0);
+   animation: fluidLine 6s ease-in-out infinite alternate;
+   text-shadow: none;
+}
+
+.lyrics-style-graffiti .lyrics-line.active::before {
+   content: none;
+}
+
+.lyrics-style-graffiti .lyric-word {
+   opacity: .06;
+   filter: blur(9px);
+   transform: translateY(25px) scaleY(.55) skewX(-13deg);
+}
+
+.lyrics-style-graffiti .lyric-word.sung {
+   opacity: .88;
+   filter: none;
+   transform: translateY(0) scale(1) skewX(0);
+   text-shadow: none;
+}
+
+.lyrics-style-graffiti .lyric-word.current {
+   opacity: 1;
+   filter: none;
+   transform: translateY(-7px) scale(1.2, .84) skewX(5deg);
+   text-shadow: none;
+   animation: liquidWord .72s cubic-bezier(.22, 1, .36, 1);
+}
+
+@keyframes fluidLine {
+   from { background-position: 0% 50%; transform: translateY(0) scale(1.05) skewX(-1deg); }
+   to { background-position: 100% 50%; transform: translateY(-3px) scale(1.07, .96) skewX(2deg); }
+}
+
+@keyframes liquidWord {
+   0% { opacity: 0; transform: translateY(18px) scale(1.4, .38) skewX(-18deg); filter: blur(8px); }
+   55% { opacity: 1; transform: translateY(-10px) scale(.84, 1.24) skewX(9deg); }
+   100% { transform: translateY(-7px) scale(1.2, .84) skewX(5deg); filter: none; }
+}
+
+@media (max-width: 600px) {
+   .lyrics-style-switcher { max-width: 100%; flex-wrap: wrap; justify-content: center; }
+   .lyrics-style-spatial .lyrics-line { margin-bottom: 46px; }
+}
+
+
+/* =====================================================
+  READABILITY TUNING — VINTAGE & GRAFFITI
+===================================================== */
+
+/* Vintage becomes a clean, printed black-on-paper treatment. */
+.lyrics-style-vintage .lyrics-page {
+   background: #f5f1e7;
+   color: #171511;
+}
+
+.lyrics-style-vintage .lyrics-header,
+.lyrics-style-vintage .lyrics-label,
+.lyrics-style-vintage .lyrics-artist,
+.lyrics-style-vintage .lyrics-title {
+   color: #171511;
+   text-shadow: none;
+}
+
+.lyrics-style-vintage .lyrics-container {
+   background: #fffdf8;
+   mask-image: linear-gradient(to bottom, transparent, black 8%, black 90%, transparent);
+   -webkit-mask-image: linear-gradient(to bottom, transparent, black 8%, black 90%, transparent);
+}
+
+.lyrics-style-vintage .lyrics-line,
+.lyrics-style-vintage .lyrics-line.near,
+.lyrics-style-vintage .lyrics-line.active {
+   color: #171511;
+   filter: none;
+   text-shadow: none;
+}
+
+.lyrics-style-vintage .lyrics-line.active {
+   transform: translateY(0) scale(1) rotate(.15deg);
+   clip-path: none;
+   animation: none;
+}
+
+.lyrics-style-vintage .lyric-word.sung,
+.lyrics-style-vintage .lyric-word.current {
+   color: #171511;
+}
+
+@keyframes vintageTypeReveal {
+   from { clip-path: inset(0 100% 0 0); }
+   to { clip-path: inset(0 0 0 0); }
+}
+
+.lyrics-style-vintage .vintage-row {
+   display: block;
+   width: max-content;
+   max-width: 100%;
+   margin: 0 auto 8px;
+   overflow: hidden;
+   white-space: nowrap;
+   clip-path: inset(0 100% 0 0);
+}
+
+.lyrics-style-vintage .lyrics-line.active .vintage-row {
+   animation: vintageTypeReveal .46s steps(22, end) var(--vintage-row-delay, 0s) forwards;
+}
+
+.lyrics-style-vintage .vintage-row:last-child {
+   margin-bottom: 0;
+}
+
+.lyrics-style-vintage .lyrics-style-switcher {
+   border-color: rgba(23, 21, 17, .18);
+   background: rgba(255, 253, 248, .75);
+}
+
+.lyrics-style-vintage .lyrics-style-button {
+   color: rgba(23, 21, 17, .6);
+}
+
+.lyrics-style-vintage .lyrics-style-button.is-selected {
+   color: #fff;
+   background: #171511;
+   box-shadow: none;
+}
+
+.lyrics-style-vintage .page-button {
+   color: #171511;
+   border-color: rgba(23, 21, 17, .22);
+   background: rgba(255, 253, 248, .7);
+}
+
+/* Graffiti keeps its liquid movement but uses solid high-contrast text. */
+.lyrics-style-graffiti .lyrics-line {
+   color: #c6ecff;
+   background: none;
+   -webkit-background-clip: initial;
+   background-clip: initial;
+   filter: blur(2px) saturate(1.12);
+}
+
+.lyrics-style-graffiti .lyrics-line.near {
+   color: #98bbff;
+   filter: blur(.55px) saturate(1.15);
+}
+
+.lyrics-style-graffiti .lyrics-line.active {
+   color: #e9f7ff;
+   filter: none;
+   animation: fluidLine 6s ease-in-out infinite alternate;
+}
+
+.lyrics-style-graffiti .lyric-word.sung,
+.lyrics-style-graffiti .lyric-word.current {
+   display: inline-block;
+   color: #e9f7ff;
+   background: none;
+   -webkit-text-fill-color: currentColor;
+   text-shadow: 0 2px 10px rgba(7, 14, 45, .48);
+}
+
+.lyrics-style-graffiti .lyric-word.current {
+   color: #fff6d5;
+   filter: none;
+}
+
+
+/* =====================================================
+  SPAZIALE — ROTATING TYPE OBJECT
+===================================================== */
+
+.lyrics-style-spatial .lyrics-container {
+   perspective: 650px;
+   perspective-origin: 50% 49%;
+}
+
+.lyrics-style-spatial .lyrics-container::before {
+   inset: 16% 19%;
+   border-color: rgba(255, 255, 255, .055);
+   transform: rotateX(70deg) rotateZ(-8deg) scale(1.45);
+}
+
+.lyrics-style-spatial .lyrics-line {
+   letter-spacing: -2.3px;
+   font-weight: 850;
+   transform: translate3d(var(--spatial-drift), calc(var(--lyric-distance) * 18px), calc(var(--lyric-distance) * -185px)) rotateX(calc(var(--lyric-distance) * -8deg)) rotateY(var(--spatial-yaw)) rotateZ(var(--spatial-turn)) scale(.56);
+}
+
+.lyrics-style-spatial .lyrics-line.past {
+   transform: translate3d(var(--spatial-drift), 28px, -310px) rotateX(24deg) rotateY(var(--spatial-yaw)) rotateZ(var(--spatial-turn)) scale(.66);
+}
+
+.lyrics-style-spatial .lyrics-line.future {
+   transform: translate3d(var(--spatial-drift), -24px, -230px) rotateX(-20deg) rotateY(var(--spatial-yaw)) rotateZ(var(--spatial-turn)) scale(.72);
+}
+
+.lyrics-style-spatial .lyrics-line.near.past {
+   transform: translate3d(var(--spatial-drift), 12px, -100px) rotateX(11deg) rotateY(var(--spatial-yaw)) rotateZ(var(--spatial-turn)) scale(.88);
+}
+
+.lyrics-style-spatial .lyrics-line.near.future {
+   transform: translate3d(var(--spatial-drift), -10px, -74px) rotateX(-10deg) rotateY(var(--spatial-yaw)) rotateZ(var(--spatial-turn)) scale(.91);
+}
+
+.lyrics-style-spatial .lyrics-line.active {
+   transform: translate3d(var(--spatial-drift), 0, 24px) rotateX(0) rotateY(var(--spatial-yaw)) rotateZ(var(--spatial-turn)) scale(1.02);
+   animation: spatialLineFloat 7s ease-in-out var(--spatial-delay) infinite alternate;
+}
+
+.lyrics-style-spatial .lyric-word.sung {
+   opacity: .28;
+   transform: translate3d(0, var(--word-lift), 0) rotateZ(var(--word-turn)) scale(.98);
+   animation: spatialWordFloat 4.8s ease-in-out var(--word-delay) infinite alternate;
+}
+
+.lyrics-style-spatial .lyric-word.current {
+   opacity: 1;
+   transform: translate3d(0, calc(var(--word-lift) - 2px), 70px) rotateZ(var(--word-turn)) rotateX(-7deg) scale(1.12);
+   animation: spatialCurrentWord .55s cubic-bezier(.16, 1, .3, 1);
+}
+
+@keyframes spatialLineFloat {
+   from { translate: 0 -3px; rotate: 0deg; }
+   to { translate: 0 5px; rotate: 1.6deg; }
+}
+
+@keyframes spatialWordFloat {
+   from { translate: 0 -2px; rotate: -1deg; }
+   to { translate: 0 3px; rotate: 1.2deg; }
+}
+
+@keyframes spatialCurrentWord {
+   0% { opacity: 0; transform: translate3d(0, 16px, -150px) rotateZ(var(--word-turn)) rotateX(22deg) scale(.54); }
+   65% { opacity: 1; transform: translate3d(0, calc(var(--word-lift) - 5px), 86px) rotateZ(var(--word-turn)) rotateX(-9deg) scale(1.18); }
+   100% { opacity: 1; transform: translate3d(0, calc(var(--word-lift) - 2px), 70px) rotateZ(var(--word-turn)) rotateX(-7deg) scale(1.12); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+   .lyrics-style-spatial .lyrics-line.active,
+   .lyrics-style-spatial .lyric-word.sung,
+   .lyrics-style-spatial .lyric-word.current {
+       animation: none;
+   }
+}
+
+
+/* Spaziale is deliberately a single-verse stage: no surrounding lines. */
+.lyrics-style-spatial .lyrics-line.past,
+.lyrics-style-spatial .lyrics-line.future,
+.lyrics-style-spatial .lyrics-line.near.past,
+.lyrics-style-spatial .lyrics-line.near.future {
+   opacity: 0;
+   visibility: hidden;
+   filter: blur(12px);
+   pointer-events: none;
+}
+
+.lyrics-style-spatial .lyrics-line.active {
+   visibility: visible;
+}
+
+
+/* =====================================================
+  GRAFFITI — KINETIC TEXT RIBBON
+  One whole verse becomes a floating, winding object.
+===================================================== */
+
+.lyrics-style-graffiti .lyrics-container {
+   mask-image: none;
+   -webkit-mask-image: none;
+   overflow: hidden;
+   background:
+       radial-gradient(ellipse at 20% 35%, color-mix(in srgb, var(--cover-color-1, #627dff) 24%, transparent), transparent 48%),
+       radial-gradient(ellipse at 80% 65%, color-mix(in srgb, var(--cover-color-2, #d76fae) 20%, transparent), transparent 52%);
+}
+
+.lyrics-style-graffiti .lyrics {
+   position: relative;
+   height: 100%;
+   padding: 0;
+   overflow: hidden;
+   display: block;
+}
+
+.lyrics-style-graffiti .lyrics-line {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   width: min(850px, 94%);
+   margin: 0;
+   padding: 18px 10px;
+   display: flex;
+   flex-wrap: wrap;
+   align-items: center;
+   justify-content: center;
+   column-gap: 18px;
+   row-gap: 62px;
+   opacity: 0;
+   visibility: hidden;
+   pointer-events: none;
+   transform: translate(-50%, -50%) scale(.62) rotate(-7deg);
+   transition: opacity .45s ease, transform .8s cubic-bezier(.16, 1, .3, 1), visibility 0s linear .8s;
+}
+
+.lyrics-style-graffiti .lyrics-line.active {
+   opacity: 1;
+   visibility: visible;
+   pointer-events: auto;
+   transform: translate(-50%, -50%) scale(1) rotate(0deg);
+   animation: fluidRibbonEnter .9s cubic-bezier(.16, 1, .3, 1);
+   transition-delay: 0s;
+}
+
+.lyrics-style-graffiti .lyrics-line::before,
+.lyrics-style-graffiti .lyrics-line::after {
+   content: none;
+}
+
+.lyrics-style-graffiti .lyrics-line.active::before,
+.lyrics-style-graffiti .lyrics-line.active::after {
+   content: "";
+   animation: none;
+   box-shadow: none;
+}
+
+.lyrics-style-graffiti .lyric-word,
+.lyrics-style-graffiti .lyric-word.sung,
+.lyrics-style-graffiti .lyric-word.current {
+   display: inline-block;
+   margin: 0 9px;
+   opacity: 1;
+   color: #edf7ff;
+   font-size: clamp(30px, 4.8vw, 68px);
+   line-height: .8;
+   letter-spacing: -2.5px;
+   filter: none;
+   text-shadow: 0 3px 11px rgba(5, 12, 34, .48);
+   transform-origin: center;
+   animation: fluidWordDrift 5.4s ease-in-out var(--word-delay, 0s) infinite alternate;
+}
+
+.lyrics-style-graffiti .lyric-word:nth-child(5n + 1) {
+   color: var(--graffiti-color-1, #bdeaff);
+   transform: translateY(25px) rotate(-14deg) scale(.92, 1.11);
+}
+
+.lyrics-style-graffiti .lyric-word:nth-child(5n + 2) {
+   color: var(--graffiti-color-2, #f1edff);
+   transform: translateY(1px) rotate(-5deg) scale(1.04, .94);
+}
+
+.lyrics-style-graffiti .lyric-word:nth-child(5n + 3) {
+   color: var(--graffiti-color-3, #ffc9e8);
+   transform: translateY(-22px) rotate(9deg) scale(.94, 1.09);
+}
+
+.lyrics-style-graffiti .lyric-word:nth-child(5n + 4) {
+   color: var(--graffiti-color-4, #e7f1ff);
+   transform: translateY(-9px) rotate(13deg) scale(1.05, .92);
+}
+
+.lyrics-style-graffiti .lyric-word:nth-child(5n) {
+   color: var(--graffiti-color-1, #d5d1ff);
+   transform: translateY(19px) rotate(-10deg) scale(.97, 1.07);
+}
+
+@keyframes fluidRibbonEnter {
+   from { opacity: 0; transform: translate(-50%, -50%) scale(.54) rotate(-15deg); filter: blur(12px); }
+   70% { opacity: 1; transform: translate(-50%, -50%) scale(1.04) rotate(2deg); filter: blur(0); }
+   to { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+}
+
+@keyframes fluidWordDrift {
+   from { translate: 0 -4px; rotate: -1deg; }
+   to { translate: 0 5px; rotate: 1.5deg; }
+}
+
+@media (max-width: 600px) {
+   .lyrics-style-graffiti .lyrics-line { column-gap: 8px; row-gap: 42px; }
+   .lyrics-style-graffiti .lyric-word,
+   .lyrics-style-graffiti .lyric-word.sung,
+   .lyrics-style-graffiti .lyric-word.current { margin: 0 4px; letter-spacing: -1.7px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+   .lyrics-style-graffiti .lyrics-line.active,
+   .lyrics-style-graffiti .lyric-word,
+   .lyrics-style-graffiti .lyric-word.sung,
+   .lyrics-style-graffiti .lyric-word.current { animation: none; }
+}
